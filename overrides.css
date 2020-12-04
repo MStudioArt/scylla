@@ -1,0 +1,156 @@
+// Breakpoints
+$break--cta-intro-hero--medium: 640px;
+$break--cta-intro-hero--large: 920px;
+
+// Mixins
+@mixin cta-intro-hero--eyebrow-rule {
+  position: relative;
+  margin-bottom: $space-stack-m;
+
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: -1.2rem;
+    width: 4rem;
+    height: 4px;
+    background-color: $green-light;
+  }
+}
+
+@mixin cta-intro-hero--eyebrow {
+  @include font-calibre-semibold;
+
+  text-transform: uppercase;
+  font-size: modular-scale(-3);
+  letter-spacing: 1px;
+  color: $blue-gray-light;
+}
+
+@mixin cta-intro-hero--heading {
+  @include font-mercury-display-semibold;
+
+  font-size: modular-scale(2);
+  line-height: 1.17;
+  color: $gray-dark;
+
+  @include breakpoint($break--cta-intro-hero--large) {
+    font-size: modular-scale(3);
+  }
+}
+
+@mixin cta-intro-hero--text {
+  @include font-calibre-regular;
+
+  font-size: modular-scale(0);
+  line-height: 1.5;
+  color: $blue-gray;
+}
+
+@mixin cta-intro-hero--layout {
+  @include space-stack-page;
+
+  position: relative;
+
+  @include breakpoint($break--cta-intro-hero--medium) {
+    @include space-inset-m;
+
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    min-height: 400px;
+  }
+
+  @include breakpoint($break--cta-intro-hero--large) {
+    @include space-inset-l;
+
+    min-height: 640px;
+  }
+}
+
+@mixin cta-intro-hero--image-layout {
+  @include breakpoint($break--cta-intro-hero--medium) {
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+}
+
+@mixin cta-intro-hero--content-layout {
+  @include space-inset-m;
+
+  background-color: $white;
+  border-bottom: 2px solid $gray-lightest;
+
+  @include breakpoint($break--cta-intro-hero--medium) {
+    width: 258px;
+    border-bottom: 0;
+  }
+
+  @include breakpoint($break--cta-intro-hero--large) {
+    padding: $space-inset-xl $space-inset-l;
+    width: 333px;
+  }
+}
+
+.cta-intro-hero {
+  @include cta-intro-hero--layout;
+
+  &__image {
+    @include cta-intro-hero--image-layout;
+  }
+
+  &__content-wrapper {
+    @include cta-intro-hero--content-layout;
+  }
+
+  &__eyebrow {
+    @include cta-intro-hero--eyebrow;
+    @include cta-intro-hero--eyebrow-rule;
+  }
+
+  &__heading {
+    @include cta-intro-hero--heading;
+    @include space-stack-xs;
+  }
+
+  &__text {
+    @include cta-intro-hero--text;
+    @include space-stack-s;
+  }
+
+  &__link {
+    @include button-secondary-light;
+    @include button-size-xs;
+
+    @include breakpoint($break--cta-intro-hero--large) {
+      @include button-size-m;
+    }
+  }
+}
+
+// Styles just for PL.
+.sb-show-main {
+  > .cta-intro-hero {
+    // The widest the content section ever gets is 887px.
+    // This is because it is only on pages with a sidebar.
+
+    max-width: 887px;
+
+    @include break-global($large) {
+      margin-left: 25%;
+      padding-left: 4rem;
+      max-width: 912px;
+    }
+  }
+}
